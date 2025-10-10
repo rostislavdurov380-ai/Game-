@@ -27,6 +27,16 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
+// Стрибок при дотику (для телефонів)
+document.addEventListener("touchstart", () => {
+    if (!gameOver && !dino.classList.contains("jump")) {
+        dino.classList.add("jump");
+        setTimeout(() => dino.classList.remove("jump"), 600);
+    } else if (gameOver) {
+        startGame();
+    }
+});
+
 
 // Старт гри
 function startGame() {
@@ -131,8 +141,7 @@ function createBird() {
             endGame();
             return;
         }
-
-        // якщо птах вилетів за межі
+// якщо птах вилетів за межі
         if (birdLeft < -50) {
             score++;
             scoreSpan.textContent = score;
@@ -161,3 +170,4 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
