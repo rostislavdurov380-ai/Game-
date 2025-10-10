@@ -13,6 +13,8 @@ let timer;
 let cactusInterval;
 let birdInterval;
 let litakInterval;
+let dino2Interval;
+let dino3Interval;
 highscoreSpan.textContent = highscore;
 
 // Стрибок динозавра
@@ -37,12 +39,13 @@ document.addEventListener("touchstart", () => {
     }
 });
 
-
 // Старт гри
 function startGame() {
     document.querySelectorAll(".cactus").forEach(c => c.remove());
     document.querySelectorAll(".bird").forEach(b => b.remove());
-    document.querySelectorAll(".litak").forEach(b => b.remove()); // Виправлено селектор на клас
+    document.querySelectorAll(".litak").forEach(b => b.remove());
+    document.querySelectorAll(".dino2").forEach(b => b.remove()); // Для ptero
+    document.querySelectorAll(".dino3").forEach(b => b.remove()); // Для ptero
     score = 0;
     seconds = 0;
     gameOver = false;
@@ -67,7 +70,13 @@ function startGame() {
     birdInterval = setInterval(createBird, 10000);
   
     if (litakInterval) clearInterval(litakInterval);
-    litakInterval = setInterval(createLitak, 50000); // Виправлено назву функції
+    litakInterval = setInterval(createLitak, 10000); // Синхронізовано з CSS, але тепер динамічно
+  
+    if (dino2Interval) clearInterval(dino2Interval);
+    dino2Interval = setInterval(createDino2, 6000); // Швидкість з CSS
+  
+    if (dino3Interval) clearInterval(dino3Interval);
+    dino3Interval = setInterval(createDino3, 15000); // Швидкість з CSS
 }
 
 // Створення кактусів
@@ -109,18 +118,18 @@ function createCactus() {
 function createBird() {
     if (gameOver) return;
 
-    // Перевірка: не створювати птаха, якщо на екрані є хотя б один кактус (уникаємо подвійної перешкоди)
+    // Уникаємо створення, якщо є кактус
     const activeCactuses = game.querySelectorAll('.cactus');
     if (activeCactuses.length > 0) {
-        return; // Пропустити створення, наступний інтервал спробує через 10с
+        return;
     }
 
     const bird = document.createElement("div");
     bird.classList.add("bird");
     game.appendChild(bird);
 
-    let birdLeft = game.offsetWidth; // старт праворуч
-    const birdTop = 100 + 400; // фіксована висота птаха
+    let birdLeft = game.offsetWidth;
+    const birdTop = 100 + 400; // З твого коду, але перевір — може 150px для низького польоту
     bird.style.top = birdTop + "px";
     bird.style.left = birdLeft + "px";
 
@@ -131,13 +140,12 @@ function createBird() {
             return;
         }
 
-        birdLeft -= 6; // рух вліво
+        birdLeft -= 6;
         bird.style.left = birdLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
         const birdRect = bird.getBoundingClientRect();
 
-        // Перевірка колізії
         if (
             dinoRect.right > birdRect.left &&
             dinoRect.left < birdRect.right &&
@@ -147,7 +155,7 @@ function createBird() {
             endGame();
             return;
         }
-        // якщо птах вилетів за межі
+
         if (birdLeft < -50) {
             score++;
             scoreSpan.textContent = score;
@@ -157,16 +165,21 @@ function createBird() {
     }, 20);
 }
 
-// Функція для літака (додана, бо викликалася, але не визначена)
 function createLitak() {
     if (gameOver) return;
 
+    // Уникаємо створення, якщо є кактус
+    const activeCactuses = game.querySelectorAll('.cactus');
+    if (activeCactuses.length > 0) {
+        return;
+    }
+
     const litak = document.createElement("div");
-    litak.id = "litak"; // Або клас, залежно від CSS
+    litak.classList.add("litak"); // Змінено на клас, щоб уникнути дублювання id
     game.appendChild(litak);
 
     let litakLeft = game.offsetWidth;
-    const litakTop = 20; // З вашого CSS
+    const litakTop = 20;
     litak.style.top = litakTop + "px";
     litak.style.left = litakLeft + "px";
 
@@ -177,7 +190,7 @@ function createLitak() {
             return;
         }
 
-        litakLeft -= 5; // Швидкість, як у кактуса
+        litakLeft -= 5;
         litak.style.left = litakLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
@@ -202,13 +215,115 @@ function createLitak() {
     }, 20);
 }
 
+function createDino2() {
+    if (gameOver) return;
+
+    // Уникаємо створення, якщо є кактус
+    const activeCactuses = game.querySelectorAll('.cactus');
+    if (activeCactuses.length > 0) {
+        return;
+    }
+
+    const dino2 = document.createElement("div");
+    dino2.classList.add("dino2"); // Клас замість id
+    game.appendChild(dino2);
+
+    let dino2Left = game.offsetWidth;
+    const dino2Top = 20;
+    dino2.style.top = dino2Top + "px";
+    dino2.style.left = dino2Left + "px";
+
+    const move = setInterval(() => {
+        if (gameOver) {
+            clearInterval(move);
+            dino2.remove();
+            return;
+        }
+
+        dino2Left -= 6; // Швидкість з CSS (6s інтервал)
+        dino2.style.left = dino2Left + "px";
+
+        const dinoRect = dino.getBoundingClientRect();
+        const dino2Rect = dino2.getBoundingClientRect();
+
+        if (
+            dinoRect.right > dino2Rect.left &&
+            dinoRect.left < dino2Rect.right &&
+            dinoRect.bottom > dino2Rect.top &&
+            dinoRect.top < dino2Rect.bottom
+        ) {
+            endGame();
+            return;
+        }
+
+        if (dino2Left < -50) {
+            score++;
+            scoreSpan.textContent = score;
+            dino2.remove();
+            clearInterval(move);
+        }
+    }, 20);
+}
+
+function createDino3() {
+    if (gameOver) return;
+
+    // Уникаємо створення, якщо є кактус
+    const activeCactuses = game.querySelectorAll('.cactus');
+    if (activeCactuses.length > 0) {
+        return;
+    }
+
+    const dino3 = document.createElement("div");
+    dino3.classList.add("dino3"); // Клас замість id
+    game.appendChild(dino3);
+
+    let dino3Left = game.offsetWidth;
+    const dino3Top = 0;
+    dino3.style.top = dino3Top + "px";
+    dino3.style.left = dino3Left + "px";
+
+    const move = setInterval(() => {
+        if (gameOver) {
+            clearInterval(move);
+            dino3.remove();
+            return;
+        }
+
+        dino3Left -= 4; // Повільніше для 15s інтервалу
+        dino3.style.left = dino3Left + "px";
+
+        const dinoRect = dino.getBoundingClientRect();
+        const dino3Rect = dino3.getBoundingClientRect();
+
+        if (
+            dinoRect.right > dino3Rect.left &&
+            dinoRect.left < dino3Rect.right &&
+            dinoRect.bottom > dino3Rect.top &&
+            dinoRect.top < dino3Rect.bottom
+        ) {
+            endGame();
+            return;
+        }
+
+        if (dino3Left < -50) {
+            score++;
+            scoreSpan.textContent = score;
+            dino3.remove();
+            clearInterval(move);
+        }
+    }, 20);
+}
+
 // Кінець гри
 function endGame() {
     gameOver = true;
     clearInterval(timer);
     clearInterval(cactusInterval);
     clearInterval(birdInterval);
-    clearInterval(litakInterval); // Додано для літака
+    clearInterval(litakInterval);
+    clearInterval(dino2Interval);
+    clearInterval(dino3Interval);
     gameOverText.style.display = "block";
 
     if (score > highscore) {
