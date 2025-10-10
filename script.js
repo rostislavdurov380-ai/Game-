@@ -13,7 +13,6 @@ let timer;
 let cactusInterval;
 let birdInterval;
 let litakInterval;
-
 highscoreSpan.textContent = highscore;
 
 // Стрибок динозавра
@@ -28,7 +27,6 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
-
 // Стрибок при дотику (для телефонів)
 document.addEventListener("touchstart", () => {
     if (!gameOver && !dino.classList.contains("jump")) {
@@ -38,13 +36,13 @@ document.addEventListener("touchstart", () => {
         startGame();
     }
 });
+    
 
 // Старт гри
 function startGame() {
     document.querySelectorAll(".cactus").forEach(c => c.remove());
     document.querySelectorAll(".bird").forEach(b => b.remove());
-    document.querySelectorAll(".litak").forEach(b => b.remove());
-
+  document.querySelectorAll("litak").forEach(b => b.remove());
     score = 0;
     seconds = 0;
     gameOver = false;
@@ -66,10 +64,10 @@ function startGame() {
     cactusInterval = setInterval(createCactus, 1500);
 
     if (birdInterval) clearInterval(birdInterval);
-    birdInterval = setInterval(createBird, 10000);
-
-    if (litakInterval) clearInterval(litakInterval);
-    litakInterval = setInterval(createLitak, 50000);
+  birdInterval = setInterval(createBird, 10000);
+  
+   if (litakInterval) clearInterval(litakInterval);
+    litakInterval = setInterval(createlitak, 50000);
 }
 
 // Створення кактусів
@@ -108,25 +106,15 @@ function createCactus() {
     }, 20);
 }
 
-// Створення птахів
 function createBird() {
     if (gameOver) return;
-
-    // Перевірка, чи є кактус на стартовій позиції птаха
-    const cactuses = document.querySelectorAll(".cactus");
-    for (let cactus of cactuses) {
-        const cactusLeft = parseInt(cactus.style.left);
-        if (cactusLeft > 500 && cactusLeft < 650) {
-            return; // пропускаємо спавн птаха
-        }
-    }
 
     const bird = document.createElement("div");
     bird.classList.add("bird");
     game.appendChild(bird);
 
-    let birdLeft = game.offsetWidth; 
-    const birdTop = 400; // фіксована висота птаха
+    let birdLeft = game.offsetWidth; // старт праворуч
+    const birdTop = 100+400; // фіксована висота птаха
     bird.style.top = birdTop + "px";
     bird.style.left = birdLeft + "px";
 
@@ -137,12 +125,13 @@ function createBird() {
             return;
         }
 
-        birdLeft -= 6; 
+        birdLeft -= 6; // рух вліво
         bird.style.left = birdLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
         const birdRect = bird.getBoundingClientRect();
 
+        // Перевірка колізії
         if (
             dinoRect.right > birdRect.left &&
             dinoRect.left < birdRect.right &&
@@ -152,7 +141,7 @@ function createBird() {
             endGame();
             return;
         }
-
+// якщо птах вилетів за межі
         if (birdLeft < -50) {
             score++;
             scoreSpan.textContent = score;
@@ -162,50 +151,7 @@ function createBird() {
     }, 20);
 }
 
-// Створення літаків (litak)
-function createLitak() {
-    if (gameOver) return;
 
-    const litak = document.createElement("div");
-    litak.classList.add("litak");
-    game.appendChild(litak);
-
-    let litakLeft = game.offsetWidth;
-    const litakTop = 200;
-    litak.style.top = litakTop + "px";
-    litak.style.left = litakLeft + "px";
-
-    const move = setInterval(() => {
-        if (gameOver) {
-            clearInterval(move);
-            litak.remove();
-            return;
-        }
-
-        litakLeft -= 8;
-        litak.style.left = litakLeft + "px";
-
-        const dinoRect = dino.getBoundingClientRect();
-        const litakRect = litak.getBoundingClientRect();
-
-        if (
-            dinoRect.right > litakRect.left &&
-            dinoRect.left < litakRect.right &&
-            dinoRect.bottom > litakRect.top &&
-            dinoRect.top < litakRect.bottom
-        ) {
-            endGame();
-            return;
-        }
-
-        if (litakLeft < -50) {
-            score++;
-            scoreSpan.textContent = score;
-            litak.remove();
-            clearInterval(move);
-        }
-    }, 20);
-}
 
 // Кінець гри
 function endGame() {
@@ -213,7 +159,6 @@ function endGame() {
     clearInterval(timer);
     clearInterval(cactusInterval);
     clearInterval(birdInterval);
-    clearInterval(litakInterval);
     gameOverText.style.display = "block";
 
     if (score > highscore) {
