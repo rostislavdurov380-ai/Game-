@@ -116,7 +116,7 @@ body {
 }
 
 
-#bird {
+.bird {
     background-image: url(img/78171_29.webp);
     width: 100px;
     height: 90px;
