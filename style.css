@@ -2,6 +2,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: black;
+}
 
 .game {
     width: 600px;
@@ -270,4 +271,3 @@ body {
         left: -100px;
     }
 }
-
