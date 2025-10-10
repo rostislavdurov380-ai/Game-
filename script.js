@@ -16,30 +16,17 @@ let litakInterval;
 highscoreSpan.textContent = highscore;
 
 // Стрибок динозавра
-// Стрибок динозавра (ПК + телефон)
-function jump() {
-    if (!gameOver && !dino.classList.contains("jump")) {
-        dino.classList.add("jump");
-        setTimeout(() => dino.classList.remove("jump"), 600);
-    } else if (gameOver) {
-        startGame();
-    }
-}
-
-// Клавіатура (ПК)
 document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         e.preventDefault();
-        jump();
+        if (!gameOver && !dino.classList.contains("jump")) {
+            dino.classList.add("jump");
+            setTimeout(() => dino.classList.remove("jump"), 600);
+        } else if (gameOver) {
+            startGame();
+        }
     }
 });
-
-// Дотик (телефон)
-document.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    jump();
-});
-
 
 // Старт гри
 function startGame() {
