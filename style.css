@@ -1,11 +1,7 @@
 body {
-  margin: 0;
-  background: linear-gradient(to bottom, #87ceeb, #f0f0f0);
-  overflow: hidden;
-  touch-action: none; /* важливо для телефону */
-  user-select: none;
-  font-family: sans-serif;
-}
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
 
 .game {
     width: 600px;
