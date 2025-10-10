@@ -114,11 +114,9 @@ body {
 
 
 }
-
-
 .bird {
     background-image: url(img/78171_29.webp);
-      width: 100px;
+    width: 100px;
     height: 90px;
     position: absolute;
     top: 0;
@@ -128,7 +126,6 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 5;
-}
 
 
 @keyframes bird {
@@ -272,3 +269,4 @@ body {
     }
 
 }
+
