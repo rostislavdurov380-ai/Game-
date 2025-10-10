@@ -21,6 +21,8 @@ document.addEventListener("keydown", (e) => {
         e.preventDefault();
          document.addEventListener("touchstart", function (){
             jump();  
+               document.addEventListener(`touchstart`, jump());
+            document.addEventListener(`click`, jump);
         if (!gameOver && !dino.classList.contains("jump")) {
             dino.classList.add("jump");
             setTimeout(() => dino.classList.remove("jump"), 600);
@@ -163,4 +165,5 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
 
