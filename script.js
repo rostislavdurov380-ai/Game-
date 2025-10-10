@@ -12,155 +12,164 @@ let gameOver = false;
 let timer;
 let cactusInterval;
 let birdInterval;
-
+let litakInterval;
 highscoreSpan.textContent = highscore;
 
-// Функція стрибка
+// Стрибок динозавра
+// Стрибок динозавра (ПК + телефон)
 function jump() {
-  if (!gameOver && !dino.classList.contains("jump")) {
-    dino.classList.add("jump");
-    setTimeout(() => dino.classList.remove("jump"), 600);
-  } else if (gameOver) {
-    startGame();
-  }
+    if (!gameOver && !dino.classList.contains("jump")) {
+        dino.classList.add("jump");
+        setTimeout(() => dino.classList.remove("jump"), 600);
+    } else if (gameOver) {
+        startGame();
+    }
 }
 
-// Події для ПК і телефону
+// Клавіатура (ПК)
 document.addEventListener("keydown", (e) => {
-  if (e.code === "Space") {
-    e.preventDefault();
-    jump();
-  }
+    if (e.code === "Space") {
+        e.preventDefault();
+        jump();
+    }
 });
 
+// Дотик (телефон)
 document.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  jump();
+    e.preventDefault();
+    jump();
 });
+
 
 // Старт гри
 function startGame() {
-  document.querySelectorAll(".cactus").forEach(c => c.remove());
-  document.querySelectorAll(".bird").forEach(b => b.remove());
+    document.querySelectorAll(".cactus").forEach(c => c.remove());
+    document.querySelectorAll(".bird").forEach(b => b.remove());
+  document.querySelectorAll("litak").forEach(b => b.remove());
+    score = 0;
+    seconds = 0;
+    gameOver = false;
+    scoreSpan.textContent = score;
+    Time.textContent = "00:00";
+    gameOverText.style.display = "none";
 
-  score = 0;
-  seconds = 0;
-  gameOver = false;
-  scoreSpan.textContent = score;
-  Time.textContent = "00:00";
-  gameOverText.style.display = "none";
+    if (timer) clearInterval(timer);
+    timer = setInterval(() => {
+        if (!gameOver) {
+            seconds++;
+            const m = String(Math.floor(seconds / 60)).padStart(2,"0");
+            const s = String(seconds % 60).padStart(2,"0");
+            Time.textContent = `${m}:${s}`;
+        }
+    }, 1000);
 
-  if (timer) clearInterval(timer);
-  timer = setInterval(() => {
-    if (!gameOver) {
-      seconds++;
-      const m = String(Math.floor(seconds / 60)).padStart(2,"0");
-      const s = String(seconds % 60).padStart(2,"0");
-      Time.textContent = `${m}:${s}`;
-    }
-  }, 1000);
+    if (cactusInterval) clearInterval(cactusInterval);
+    cactusInterval = setInterval(createCactus, 1500);
 
-  if (cactusInterval) clearInterval(cactusInterval);
-  cactusInterval = setInterval(createCactus, 1500);
-
-  if (birdInterval) clearInterval(birdInterval);
-  birdInterval = setInterval(createBird, 7000);
+    if (birdInterval) clearInterval(birdInterval);
+  birdInterval = setInterval(createBird, 10000);
+  
+   if (litakInterval) clearInterval(litakInterval);
+    litakInterval = setInterval(createlitak, 50000);
 }
 
 // Створення кактусів
 function createCactus() {
-  if (gameOver) return;
+    if (gameOver) return;
 
-  const cactus = document.createElement("div");
-  cactus.classList.add("cactus");
-  game.appendChild(cactus);
+    const cactus = document.createElement("div");
+    cactus.classList.add("cactus");
+    game.appendChild(cactus);
 
-  let cactusLeft = game.offsetWidth;
-  cactus.style.left = cactusLeft + "px";
-
-  const move = setInterval(() => {
-    if (gameOver) {
-      clearInterval(move);
-      return;
-    }
-
-    cactusLeft -= 5;
+    let cactusLeft = 600;
     cactus.style.left = cactusLeft + "px";
 
-    const dinoBottom = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
-    if (cactusLeft < 80 && cactusLeft > 30 && dinoBottom < 50) {
-      endGame();
-      return;
-    }
+    const move = setInterval(() => {
+        if (gameOver) {
+            clearInterval(move);
+            return;
+        }
 
-    if (cactusLeft < -25) {
-      score++;
-      scoreSpan.textContent = score;
-      cactus.remove();
-      clearInterval(move);
-    }
-  }, 20);
+        cactusLeft -= 5;
+        cactus.style.left = cactusLeft + "px";
+
+        const dinoBottom = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+
+        if (cactusLeft < 80 && cactusLeft > 20 && dinoBottom < 50) {
+            endGame();
+            return;
+        }
+
+        if (cactusLeft < -25) {
+            score++;
+            scoreSpan.textContent = score;
+            cactus.remove();
+            clearInterval(move);
+        }
+    }, 20);
 }
 
-// Створення птаха
 function createBird() {
-  if (gameOver) return;
+    if (gameOver) return;
 
-  const bird = document.createElement("div");
-  bird.classList.add("bird");
-  game.appendChild(bird);
+    const bird = document.createElement("div");
+    bird.classList.add("bird");
+    game.appendChild(bird);
 
-  let birdLeft = game.offsetWidth;
-  const birdTop = Math.random() * 100 + 100; // випадкова висота
-  bird.style.top = birdTop + "px";
-  bird.style.left = birdLeft + "px";
-
-  const move = setInterval(() => {
-    if (gameOver) {
-      clearInterval(move);
-      bird.remove();
-      return;
-    }
-
-    birdLeft -= 6;
+    let birdLeft = game.offsetWidth; // старт праворуч
+    const birdTop = 100+400; // фіксована висота птаха
+    bird.style.top = birdTop + "px";
     bird.style.left = birdLeft + "px";
 
-    const dinoRect = dino.getBoundingClientRect();
-    const birdRect = bird.getBoundingClientRect();
+    const move = setInterval(() => {
+        if (gameOver) {
+            clearInterval(move);
+            bird.remove();
+            return;
+        }
 
-    // Колізія
-    if (
-      dinoRect.right > birdRect.left &&
-      dinoRect.left < birdRect.right &&
-      dinoRect.bottom > birdRect.top &&
-      dinoRect.top < birdRect.bottom
-    ) {
-      endGame();
-      return;
-    }
+        birdLeft -= 6; // рух вліво
+        bird.style.left = birdLeft + "px";
 
-    if (birdLeft < -60) {
-      score++;
-      scoreSpan.textContent = score;
-      bird.remove();
-      clearInterval(move);
-    }
-  }, 20);
+        const dinoRect = dino.getBoundingClientRect();
+        const birdRect = bird.getBoundingClientRect();
+
+        // Перевірка колізії
+        if (
+            dinoRect.right > birdRect.left &&
+            dinoRect.left < birdRect.right &&
+            dinoRect.bottom > birdRect.top &&
+            dinoRect.top < birdRect.bottom
+        ) {
+            endGame();
+            return;
+        }
+
+        // якщо птах вилетів за межі
+        if (birdLeft < -50) {
+            score++;
+            scoreSpan.textContent = score;
+            bird.remove();
+            clearInterval(move);
+        }
+    }, 20);
 }
+
+
 
 // Кінець гри
 function endGame() {
-  gameOver = true;
-  clearInterval(timer);
-  clearInterval(cactusInterval);
-  clearInterval(birdInterval);
-  gameOverText.style.display = "block";
+    gameOver = true;
+    clearInterval(timer);
+    clearInterval(cactusInterval);
+    clearInterval(birdInterval);
+    gameOverText.style.display = "block";
 
-  if (score > highscore) {
-    highscore = score;
-    highscoreSpan.textContent = highscore;
-    localStorage.setItem("highscore", highscore);
-  }
+    if (score > highscore) {
+        highscore = score;
+        highscoreSpan.textContent = highscore;
+        localStorage.setItem("highscore", highscore);
+    }
 }
 
 // Запуск гри
