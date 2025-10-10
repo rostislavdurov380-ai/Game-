@@ -36,7 +36,7 @@ document.addEventListener("touchstart", () => {
         startGame();
     }
 });
-    
+
 
 // Старт гри
 function startGame() {
