@@ -1,0 +1,273 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+
+.game {
+    width: 600px;
+    height: 650px;
+    border-bottom: 4px solid #444;
+    margin: 60px auto;
+    position: relative;
+    overflow: hidden;
+    background-color: #fafafa;
+
+    @media (max-width: 768px) {
+        width: 95vw;
+        height: 50vh;
+    }
+
+
+
+
+}
+
+#dino {
+    width: 50px;
+    height: 50px;
+    background-image: url(img/Chromium_T-Rex-error-offline.svg.png);
+    background-size: 50px 50px;
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+}
+
+.cactus {
+    width: 20px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    background-image: url(img/steps_arcdiju\ example\ cactus.png);
+    background-size: 20px 40px;
+}
+
+.jump {
+    animation: jump 0.6s linear;
+}
+
+@keyframes jump {
+    0% {
+        bottom: 0;
+    }
+
+    30% {
+        bottom: 100px;
+    }
+
+    50% {
+        bottom: 150px;
+    }
+
+    80% {
+        bottom: 100px;
+    }
+
+    100% {
+        bottom: 0;
+    }
+}
+
+#highscore {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: navy;
+    color: yellow;
+    padding: 4px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px red;
+}
+
+#Time {
+    top: 10px;
+    left: 10px;
+    background: greenyellow;
+    padding: 4px 10px;
+    position: fixed;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px aqua;
+}
+
+#score {
+    position: fixed;
+    top: 40px;
+    right: 10px;
+    background: green;
+    color: indigo;
+    padding: 4px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px violet;
+}
+
+#game-over-text {
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 24px;
+    display: none;
+    background: linear-gradient(to bottom, blue, green, red);
+    box-shadow: 0px 0px 25px indigo;
+    color: greenyellow;
+
+
+}
+
+
+.bird {
+    background-image: url(img/78171_29.webp);
+    width: 100px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    /* тут свій шлях! */
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 5;
+}
+
+
+@keyframes bird {
+    0% {
+        bottom: 0;
+    }
+
+    30% {
+        bottom: 100px;
+    }
+
+    50% {
+        bottom: 150px;
+    }
+
+    80% {
+        bottom: 100px;
+    }
+
+    100% {
+        bottom: 0;
+    }
+}
+
+#litak {
+    background-image: url(img/png-transparent-silhouette-of-plane-aircraft-flight-airplane-airliner-plane-angle-silhouette-transport-thumbnail-removebg-preview\ \(1\).png);
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 5;
+    padding: 20px;
+
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    top: 20px;
+
+    /* заміни на картинку */
+    border-radius: 50%;
+    animation: cloudMove 10s linear infinite;
+}
+
+@keyframes cloudMove {
+    0% {
+        left: 600px;
+    }
+
+    100% {
+        left: -100px;
+    }
+}
+
+
+#сонце {
+    background-image: url(img/depositphotos_337320650-stock-illustration-sun-vector-icon-isolated-on-removebg-preview\ \(1\).png);
+    width: 50px;
+    height: 40px;
+    position: end;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 5;
+    margin: 20px;
+    padding: 5px;
+
+}
+
+#dino2 {
+    background-image: url(img/png-clipart-pteranodon-pterosaurs-pterodactyls-spinosaurus-albatross-animals-wing-thumbnail-removebg-preview\ \(2\).png);
+    width: 20px;
+    height: 40px;
+    position: end;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 5;
+    right: 50px;
+    margin: 100px;
+    padding: 50px;
+
+
+    width: 20px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    background-color: fuchsia;
+    /* заміни на картинку */
+    border-radius: 50%;
+    animation: cloudMove 6s linear infinite;
+}
+
+@keyframes cloudMove {
+    0% {
+        left: 600px;
+    }
+
+    100% {
+        left: -100px;
+    }
+}
+
+
+#dino3 {
+    background-image: url(img/png-transparent-flying-pterosaurs-flying-pterosaurs-3d-dinosaurs-dinosaur-removebg-preview\ \(1\).png);
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 5;
+    margin-left: 250px;
+    padding: 40px;
+
+
+    background-color: white;
+
+    border-radius: 50%;
+    animation: cloudMove 15s linear infinite;
+}
+
+@keyframes cloudMove {
+    0% {
+        left: 600px;
+    }
+
+    100% {
+        left: -100px;
+    }
+}
