@@ -148,7 +148,7 @@ function createBird() {
             bird.remove();
             clearInterval(move);
         }
-    }, 20);
+    }, 15);
 }
 
 
