@@ -115,7 +115,7 @@ body {
 
 }
 .bird {
-    background-image: url(img/78171_29.webp);
+    background-image: url();
     width: 100px;
     height: 90px;
     position: absolute;
@@ -269,5 +269,6 @@ body {
     }
 
 }
+
 
 
