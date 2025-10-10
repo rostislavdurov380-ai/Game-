@@ -105,7 +105,6 @@ function createCactus() {
         }
     }, 20);
 }
-
 function createBird() {
     if (gameOver) return;
 
@@ -114,7 +113,7 @@ function createBird() {
     game.appendChild(bird);
 
     let birdLeft = game.offsetWidth; // старт праворуч
-    const birdTop = 100+400; // фіксована висота птаха
+    const birdTop = game.offsetHeight - 70; // птах летить низько, на рівні кактуса
     bird.style.top = birdTop + "px";
     bird.style.left = birdLeft + "px";
 
@@ -139,9 +138,10 @@ function createBird() {
             dinoRect.top < birdRect.bottom
         ) {
             endGame();
-            return;
+return;
         }
-// якщо птах вилетів за межі
+
+        // якщо птах вилетів за межі
         if (birdLeft < -50) {
             score++;
             scoreSpan.textContent = score;
@@ -150,6 +150,7 @@ function createBird() {
         }
     }, 20);
 }
+
 
 
 
