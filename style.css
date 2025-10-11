@@ -159,7 +159,7 @@ body {
     background-image: url('img/depositphotos_337320650-stock-illustration-sun-vector-icon-isolated-on-removebg-preview\ \(1\).png');
     width: 50px;
     height: 40px;
-    position: absolute;
+    position: end;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -181,24 +181,27 @@ body {
 }
 
 #dino2 {
-    width: 20px;
-    height: 30px;
+    width: 80px;
+    height: 60px;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: fuchsia;
+    background-image: url(img/Chrome_Pterodactyl.png);
     /* можна замінити на картинку */
     animation: cloudMove 6s linear infinite;
+    margin: 50px;
 }
 
 #dino3 {
-    width: 50px;
-    height: 40px;
+    width: 20px;
+    height: 90px;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     margin-left: 250px;
-    background-color: white;
+
+
     /* можна замінити на картинку */
     animation: cloudMove 15s linear infinite;
+
 }
