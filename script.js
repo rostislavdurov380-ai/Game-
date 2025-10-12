@@ -124,7 +124,7 @@ function createBird() {
             return;
         }
 
-        birdLeft -= 8; // рух вліво
+        birdLeft -= 6; // рух вліво
         bird.style.left = birdLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
@@ -171,3 +171,4 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
