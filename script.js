@@ -64,7 +64,7 @@ function startGame() {
     cactusInterval = setInterval(createCactus, 1500);
 
     if (birdInterval) clearInterval(birdInterval);
-  birdInterval = setInterval(createBird, 10000);
+  birdInterval = setInterval(createBird, 80000);
   
    if (litakInterval) clearInterval(litakInterval);
     litakInterval = setInterval(createlitak, 50000);
@@ -171,3 +171,4 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
