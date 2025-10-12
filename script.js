@@ -64,7 +64,7 @@ function startGame() {
     cactusInterval = setInterval(createCactus, 1500);
 
     if (birdInterval) clearInterval(birdInterval);
-  birdInterval = setInterval(createBird, 800);
+  birdInterval = setInterval(createBird, 10000);
   
    if (litakInterval) clearInterval(litakInterval);
     litakInterval = setInterval(createlitak, 50000);
@@ -113,7 +113,7 @@ function createBird() {
     game.appendChild(bird);
 
     let birdLeft = game.offsetWidth; // старт праворуч
-    const birdTop = game.offsetHeight - 70; // птах летить низько, на рівні кактуса
+    const birdTop = game.offsetHeight - 120; // птах летить низько, на рівні кактуса
     bird.style.top = birdTop + "px";
     bird.style.left = birdLeft + "px";
 
@@ -124,7 +124,7 @@ function createBird() {
             return;
         }
 
-        birdLeft -= 6; // рух вліво
+        birdLeft -= 5; // рух вліво
         bird.style.left = birdLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
@@ -171,6 +171,7 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
 
 
 
