@@ -61,7 +61,7 @@ function startGame() {
     }, 1000);
 
     if (cactusInterval) clearInterval(cactusInterval);
-    cactusInterval = setInterval(createCactus, 1000);
+    cactusInterval = setInterval(createCactus, 1500);
 
     if (birdInterval) clearInterval(birdInterval);
   birdInterval = setInterval(createBird, 20000);
@@ -124,7 +124,7 @@ function createBird() {
             return;
         }
 
-        birdLeft -= 9; // рух вліво
+        birdLeft -= 7; // рух вліво
         bird.style.left = birdLeft + "px";
 
         const dinoRect = dino.getBoundingClientRect();
@@ -171,6 +171,7 @@ function endGame() {
 
 // Запуск гри
 startGame();
+
 
 
 
